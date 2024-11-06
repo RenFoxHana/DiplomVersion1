@@ -1,4 +1,5 @@
 ﻿using DiplomVersion1.ViewModel;
+using DiplomVersion1.Windows;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,12 +10,14 @@ namespace DiplomVersion1.Pages
     /// </summary>
     public partial class Institute : Page
     {
+        MainWindow MainWindow { get; set; }
         private InstituteVM vmInstitute;
-        public Institute()
+        public Institute(MainWindow mainWindow)
         {
             InitializeComponent();
             vmInstitute = new InstituteVM();
             DataContext = vmInstitute;
+            MainWindow = mainWindow;
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
@@ -22,14 +25,10 @@ namespace DiplomVersion1.Pages
             Application.Current.MainWindow.Close();
         }
 
-        private void ButtonJou_Click(object sender, RoutedEventArgs e)
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Journal());
-        }
-
-        private void ButtonPost_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Post());
+            MenuWindow menuWindow = new MenuWindow(MainWindow, MainWindow.MainFrame);
+            menuWindow.Show();
         }
     }
 }

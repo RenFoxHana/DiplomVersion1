@@ -14,23 +14,13 @@
             <Button Background="#C5C5C5" x:Name="Exit" Content="ВЫХОД" Width="205" Height="60" Margin="400,10,0,0" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}"/>
         </Menu>
 
-        <Menu Width="260" Height="580" HorizontalAlignment="Left" Margin="20,0,0,0" Background="White">
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="ЖУРНАЛ"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="КЛЮЧИ"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="СОТРУДНИКИ"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="КАФЕДРЫ"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="ИНСТИТУТЫ"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="ДОЛЖНОСТИ"/>
-        </Menu>
-
-        <Menu Width="1600" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,0,0" HorizontalAlignment="Right" >
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ДОБАВИТЬ"/>
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="РЕДАКТИРОВАТЬ"/>
+        <Menu Width="950" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,960,0" HorizontalAlignment="Right" >
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="МЕНЮ" Click="ButtonMenu_Click" Margin="10,0,80,0" />
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="СОЗДАТЬ" Margin="10,0,50,0"/>
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="УДАЛИТЬ"/>
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ФИЛЬТРЫ" Margin="200,0,20,0" />
         </Menu>
 
-        <DataGrid Width="1615" Height="870" ColumnHeaderHeight="60" FontSize="35" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=4}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <DataGrid Width="1910" Height="870" ColumnHeaderHeight="60" FontSize="35" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=4}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using DiplomVersion1.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DiplomVersion1.Pages
@@ -8,9 +9,12 @@ namespace DiplomVersion1.Pages
     /// </summary>
     public partial class Journal : Page
     {
-        public Journal()
+        MainWindow MainWindow { get; set; }
+
+        public Journal(MainWindow mainWindow)
         {
             InitializeComponent();
+            MainWindow = mainWindow;
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
@@ -18,14 +22,10 @@ namespace DiplomVersion1.Pages
             Application.Current.MainWindow.Close();
         }
 
-        private void ButtonIns_Click(object sender, RoutedEventArgs e)
+        private void ButtonMenu_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Institute());
-        }
-
-        private void ButtonPost_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Post());
+            MenuWindow menuWindow = new MenuWindow(MainWindow, MainWindow.MainFrame);
+            menuWindow.Show();
         }
     }
 }

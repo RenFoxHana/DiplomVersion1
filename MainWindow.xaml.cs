@@ -11,7 +11,7 @@ namespace DiplomVersion1
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Content = new Journal();
+            MainFrame.Content = new Journal(this);
         }
     }
 }

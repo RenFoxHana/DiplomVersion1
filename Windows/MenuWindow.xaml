@@ -1,0 +1,20 @@
+﻿<Window x:Class="DiplomVersion1.Windows.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiplomVersion1.Windows"
+        mc:Ignorable="d"
+        Title="Меню" Height="520" Width="250" Background="#FFF0F0F0">
+    <Grid>
+        <Menu VerticalAlignment="Center" Height="470" HorizontalAlignment="Center">
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ЖУРНАЛ" Click="ButtonJournal_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="КЛЮЧИ" Click="ButtonKey_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="СОТРУДНИКИ" Click="ButtonEmp_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="КАФЕДРЫ" Click="ButtonDep_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ИНСТИТУТЫ" Click="ButtonIns_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ДОЛЖНОСТИ" Click="ButtonPost_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ВАХТЁРЫ" Click="ButtonWM_Click"/>
+        </Menu>
+    </Grid>
+</Window>

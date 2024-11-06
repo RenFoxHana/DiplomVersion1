@@ -1,23 +1,19 @@
-﻿using DiplomVersion1.Model;
-using DiplomVersion1.ViewModel;
-using DiplomVersion1.Windows;
+﻿using DiplomVersion1.Windows;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace DiplomVersion1.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Post.xaml
+    /// Логика взаимодействия для Watchman.xaml
     /// </summary>
-    public partial class Post : Page
+    public partial class Watchman : Page
     {
-        private PostVM vmPost;
         MainWindow MainWindow { get; set; }
-        public Post(MainWindow mainWindow)
+
+        public Watchman(MainWindow mainWindow)
         {
             InitializeComponent();
-            vmPost = new PostVM();
-            DataContext = vmPost;
             MainWindow = mainWindow;
         }
 
