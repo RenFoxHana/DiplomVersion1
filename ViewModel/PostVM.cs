@@ -1,14 +1,11 @@
 ﻿using DiplomVersion1.Helper;
 using DiplomVersion1.Model;
 using DiplomVersion1.Windows;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace DiplomVersion1.ViewModel
 {
@@ -25,7 +22,7 @@ namespace DiplomVersion1.ViewModel
             {
                 this.selectedPost = value;
                 OnPropertyChanged("SelectedInstitute");
-                //EditPost.CanExecute(true);
+                EditPost.CanExecute(true);
             }
         }
 
@@ -61,55 +58,55 @@ namespace DiplomVersion1.ViewModel
             }
         }
 
-        //private RelayCommand editPost;
-        //public RelayCommand EditPost
-        //{
-        //    get
-        //    {
-        //        return editPost ??
-        //        (editPost = new RelayCommand(obj =>
-        //        {
-        //            NewInstituteWindow wnInstitute = new NewInstituteWindow
-        //            {
-        //                Title = "Редактирование института",
-        //            };
-        //            Post institute = selectedPost;
-        //            Post tempinstitute = new Post();
-        //            tempinstitute = institute.ShallowCopy();
-        //            wnInstitute.DataContext = tempinstitute;
-        //            if (wnInstitute.ShowDialog() == true)
-        //            {
-        //                institute.NameIns = tempinstitute.NameIns;
-        //                db.SaveChanges();
-        //                OnPropertyChanged("SelectedInstitute");
-        //                ICollectionView view = CollectionViewSource.GetDefaultView(ListPost);
-        //                view.Refresh();
-        //            }
-        //        }, (obj) => SelectedPost != null && ListPost.Count > 0));
-        //    }
-        //}
+        private RelayCommand editPost;
+        public RelayCommand EditPost
+        {
+            get
+            {
+                return editPost ??
+                (editPost = new RelayCommand(obj =>
+                {
+                    NewPostWindow wnPost = new NewPostWindow
+                    {
+                        Title = "Редактирование должности",
+                    };
+                    Post post = selectedPost;
+                    Post temppost = new Post();
+                    temppost = post.ShallowCopy();
+                    wnPost.DataContext = temppost;
+                    if (wnPost.ShowDialog() == true)
+                    {
+                        post.NamePost = temppost.NamePost;
+                        db.SaveChanges();
+                        OnPropertyChanged("SelectedPost");
+                        ICollectionView view = CollectionViewSource.GetDefaultView(ListPost);
+                        view.Refresh();
+                    }
+                }, (obj) => SelectedPost != null && ListPost.Count > 0));
+            }
+        }
 
-        //private RelayCommand deleteInstitute;
-        //public RelayCommand DeleteInstitute
-        //{
-        //    get
-        //    {
-        //        return deleteInstitute ??
-        //        (deleteInstitute = new RelayCommand(obj =>
-        //        {
-        //            Post institute = SelectedPost;
-        //            MessageBoxResult result = MessageBox.Show("Удалить данные по институту: "
-        //                + institute.NameIns, "Предупреждение", MessageBoxButton.OKCancel,
-        //            MessageBoxImage.Warning);
-        //            if (result == MessageBoxResult.OK)
-        //            {
-        //                ListPost.Remove(institute);
-        //                db.Institutes.Remove(institute);
-        //                db.SaveChanges();
-        //            }
-        //        }, (obj) => SelectedPost != null && ListPost.Count > 0));
-        //    }
-        //}
+        private RelayCommand deletePost;
+        public RelayCommand DeletePost
+        {
+            get
+            {
+                return deletePost ??
+                (deletePost = new RelayCommand(obj =>
+                {
+                    Post post = SelectedPost;
+                    MessageBoxResult result = MessageBox.Show("Удалить данные по должности: "
+                        + post.NamePost, "Предупреждение", MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        ListPost.Remove(post);
+                        db.Posts.Remove(post);
+                        db.SaveChanges();
+                    }
+                }, (obj) => SelectedPost != null && ListPost.Count > 0));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

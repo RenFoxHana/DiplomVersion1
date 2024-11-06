@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using DiplomVersion1.Model;
+using DiplomVersion1.ViewModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DiplomVersion1.Pages
@@ -8,9 +10,12 @@ namespace DiplomVersion1.Pages
     /// </summary>
     public partial class Post : Page
     {
+        private PostVM vmPost;
         public Post()
         {
             InitializeComponent();
+            vmPost = new PostVM();
+            DataContext = vmPost;
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
