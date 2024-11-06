@@ -1,0 +1,36 @@
+﻿<Page x:Class="DiplomVersion1.Pages.Department"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiplomVersion1.Pages"
+        mc:Ignorable="d"
+        d:DesignHeight="1080" d:DesignWidth="1920"
+        Title="Журнал кафедр">
+
+    <Grid Background="White">
+        <Menu Width="1920" Height="100" VerticalAlignment="Top" Background="#D9D9D9" >
+            <TextBlock FontSize="48" TextAlignment="Center" Margin="800,20,0,0" >ЖУРНАЛ КАФЕДР</TextBlock>
+            <Button Background="#C5C5C5" x:Name="Exit" Content="ВЫХОД" Width="205" Height="60" Margin="450,10,0,0" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}"/>
+        </Menu>
+
+        <Menu Width="260" Height="580" HorizontalAlignment="Left" Margin="20,0,0,0" Background="White">
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ЖУРНАЛ"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="КЛЮЧИ"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="СОТРУДНИКИ"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="КАФЕДРЫ"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ИНСТИТУТЫ"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ДОЛЖНОСТИ"/>
+        </Menu>
+
+        <Menu Width="1600" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,0,0" HorizontalAlignment="Right" >
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ДОБАВИТЬ"/>
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="РЕДАКТИРОВАТЬ"/>
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="УДАЛИТЬ"/>
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ФИЛЬТРЫ" Margin="200,0,20,0" />
+        </Menu>
+
+        <DataGrid Width="1615" Height="870" ColumnHeaderHeight="60" FontSize="35" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=4}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Page>
