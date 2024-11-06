@@ -15,7 +15,17 @@ namespace DiplomVersion1.Pages
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            Application.Current.MainWindow.Close();
+        }
+
+        private void ButtonJou_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Journal());
+        }
+
+        private void ButtonIns_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Institute());
         }
     }
 }
