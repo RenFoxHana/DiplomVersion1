@@ -1,5 +1,7 @@
-﻿using DiplomVersion1.ViewModel;
+﻿using DiplomVersion1.Helper;
+using DiplomVersion1.Model;
 using DiplomVersion1.Windows;
+using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,19 +12,56 @@ namespace DiplomVersion1.Pages
     /// </summary>
     public partial class Institute : Page
     {
+        BochagovaDiplomContext db = new BochagovaDiplomContext();
         MainWindow MainWindow { get; set; }
-        private InstituteVM vmInstitute;
         public Institute(MainWindow mainWindow)
         {
             InitializeComponent();
-            vmInstitute = new InstituteVM();
-            DataContext = vmInstitute;
+            db.Institutes.Load();
+            DataContext = db.Institutes.Local.ToObservableCollection();
             MainWindow = mainWindow;
+            UIHelper.ConfigureUIForWatchman(
+                FindName("AddButton") as Button,
+                FindName("EditButton") as Button
+            );
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            NewInstituteWindow InstituteWindow = new NewInstituteWindow(new Model.Institute());
+            if (InstituteWindow.ShowDialog() == true)
+            {
+                Model.Institute institute = InstituteWindow.institute;
+                db.Institutes.Add(institute);
+                db.SaveChanges();
+            }
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Model.Institute? institute = listInstitute.SelectedItem as Model.Institute;
+
+            if (institute is null) return;
+
+            NewInstituteWindow InstituteWindow = new NewInstituteWindow(new Model.Institute
+            {
+                NameIns = institute.NameIns,
+            });
+
+            if (InstituteWindow.ShowDialog() == true)
+            {
+                if (institute != null)
+                {
+                    institute.NameIns = InstituteWindow.institute.NameIns;
+                    db.SaveChanges();
+                    listInstitute.Items.Refresh();
+                }
+            }
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Close();
+            Window.GetWindow(this)?.Close();
         }
 
         private void ButtonMenu_Click(object sender, RoutedEventArgs e)

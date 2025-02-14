@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DiplomVersion1.Model;
+﻿namespace DiplomVersion1.Model;
 
 public partial class Institute
 {
@@ -9,10 +6,6 @@ public partial class Institute
 
     public string NameIns { get; set; } = null!;
 
-    public Institute ShallowCopy()
-    {
-        return (Institute)this.MemberwiseClone();
-    }
-
     public virtual ICollection<Department> Departments { get; set; } = new List<Department>();
+    public virtual ICollection<Key> Keys { get; set; } = new List<Key>();
 }

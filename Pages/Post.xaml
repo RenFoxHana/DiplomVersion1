@@ -9,24 +9,23 @@
         Title="Журнал должностей">
 
     <Grid Background="White">
-        <Menu Width="1920" Height="90" VerticalAlignment="Top" Background="#D9D9D9">
-            <TextBlock FontSize="40" TextAlignment="Center" Margin="750,20,0,0" >ЖУРНАЛ ДОЛЖНОСТЕЙ</TextBlock>
-            <Button Background="#C5C5C5" x:Name="Exit" Content="ВЫХОД" Width="205" Height="60" Margin="380,20,0,0" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}"/>
-        </Menu>
+        <Rectangle Width="1920" Height="100" VerticalAlignment="Top" Fill="#D9D9D9"  />
+        <TextBlock FontSize="48" TextAlignment="Center" Height="100" Margin="0,20,0,0"  VerticalAlignment="Top">ДОЛЖНОСТИ</TextBlock>
+        <Button Background="#C5C5C5" Content="ВЫХОД" Width="205" Height="60" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,100,0"/>
 
         <Menu Width="950" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,960,0" HorizontalAlignment="Right" >
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="МЕНЮ" Click="ButtonMenu_Click" Margin="10,0,80,0" />
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="СОЗДАТЬ" Command="{Binding AddPost}" Margin="10,0,50,0"/>
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="УДАЛИТЬ" Command="{Binding DeletePost}"/>
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="СОЗДАТЬ" Margin="10,0,50,0" Click="Add_Click" x:Name="AddButton"/>
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ИЗМЕНИТЬ" Click="Edit_Click" x:Name="EditButton"/>
         </Menu>
 
-        <ListView ItemsSource="{Binding ListPost}" SelectedItem="{Binding SelectedPost}" Width="1920" Height="870" VerticalAlignment="Top" 
-                  FontSize="35" HorizontalAlignment="Center" TextElement.Foreground="Black" Margin="0,210,0,0">
+        <ListView ItemsSource="{Binding}" Width="1920" Height="870" VerticalAlignment="Top" FontSize="35" 
+          HorizontalAlignment="Center" TextElement.Foreground="Black" Margin="0,210,0,0" Name="listPost">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="Должность"
-         DisplayMemberBinding="{Binding NamePost}" />
+                            DisplayMemberBinding="{Binding NamePost}" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

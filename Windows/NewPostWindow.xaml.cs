@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using DiplomVersion1.Model;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DiplomVersion1.Windows
@@ -8,9 +10,17 @@ namespace DiplomVersion1.Windows
     /// </summary>
     public partial class NewPostWindow : Window
     {
-        public NewPostWindow()
+        public Post post {  get; set; }
+        public NewPostWindow(Post _post)
         {
             InitializeComponent();
+            post = _post;
+            DataContext = post;
+
+            if (post != null)
+            {
+                label.Content = "РЕДАКТИРОВАНИЕ ДОЛЖНОСТИ";
+            }
         }
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
@@ -19,13 +29,15 @@ namespace DiplomVersion1.Windows
         }
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (char.IsDigit(e.Text, 0) && e.Text != ".")
+            if (string.IsNullOrWhiteSpace(e.Text))
+            {
+                MessageBox.Show("Введите название должности.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (!Regex.IsMatch(e.Text, @"^[а-яА-Я]$"))
             {
                 e.Handled = true;
-            }
-            else
-            {
-                e.Handled = false;
+                MessageBox.Show("Вводите в поле названия должности только буквы.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

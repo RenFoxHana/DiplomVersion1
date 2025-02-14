@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DiplomVersion1.Model;
+﻿namespace DiplomVersion1.Model;
 
 public partial class Employee
 {
@@ -13,11 +10,15 @@ public partial class Employee
 
     public string? Patronymic { get; set; }
 
-    public int IdPost { get; set; }
+    public int? IdPost { get; set; }
 
-    public int IdDepartment { get; set; }
+    public int? IdDepartment { get; set; }
 
-    public virtual Department IdDepartmentNavigation { get; set; } = null!;
+    public virtual Department? IdDepartmentNavigation { get; set; }
 
-    public virtual Post IdPostNavigation { get; set; } = null!;
+    public virtual Post? IdPostNavigation { get; set; }
+
+    public virtual ICollection<LogOfIssuingKey> LogOfIssuingKeys { get; set; } = new List<LogOfIssuingKey>();
+
+    public string FullName => $"{LastName} {FirstName} {Patronymic}";
 }

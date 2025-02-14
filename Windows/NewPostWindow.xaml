@@ -5,22 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomVersion1.Windows"
         mc:Ignorable="d"
-        Title="NewPostWindow" Height="230" Width="700">
+        Title="NewPostWindow" Height="230" Width="620">
     <Grid>
-        <Menu Width="700" Height="35" VerticalAlignment="Top" Background="#D9D9D9">
-            <TextBlock FontSize="18" TextAlignment="Center" Margin="250,5,0,0" >РАБОТА С ДОЛЖНОСТЬЮ</TextBlock>
-        </Menu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="Название должности:" HorizontalAlignment="Left" 
-           VerticalAlignment="Top" FontSize="25" Margin="20,60,0,0"/>
+        <Rectangle Width="Auto" Height="35" VerticalAlignment="Top" Fill="#D9D9D9" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+        <Label FontSize="18" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="СОЗДАНИЕ ДОЛЖНОСТИ" x:Name="label"/>
 
-        <TextBox Height="40" Width="400" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"
- VerticalAlignment="Top" Text="{Binding NamePost}" FontSize="25" Margin="250,60,0,0"/>
+        <TextBlock Text="Должность:" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0"
+        VerticalAlignment="Center" FontSize="25"/>
+
+        <TextBox Height="40" Width="400" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="1" Grid.Column="1" 
+         VerticalAlignment="Center" Text="{Binding NamePost}" FontSize="25"/>
 
 
-        <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}"
-IsDefault="True" Click="BtSave_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,300,20"/>
-        <Button Content="ОТМЕНИТЬ" Style="{StaticResource ButtonTopMenu}"
-IsCancel="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="300,0,0,20"/>
+        <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="2" Grid.Column="0" IsDefault="True" Click="BtSave_Click"
+        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0"/>
+        <Button Content="ОТМЕНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="2" Grid.Column="1" IsCancel="True"
+        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="170,0,0,0"/>
+
     </Grid>
 </Window>

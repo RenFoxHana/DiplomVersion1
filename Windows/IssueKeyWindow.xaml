@@ -1,0 +1,39 @@
+﻿<Window x:Class="DiplomVersion1.Windows.IssueKeyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:DiplomVersion1.Windows"
+        mc:Ignorable="d"
+        Title="Выдача ключа" Height="300" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Width="Auto" Height="35" VerticalAlignment="Top" Fill="#D9D9D9" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+        <TextBlock FontSize="18" TextAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0,5,0,0">ВЫДАЧА КЛЮЧА</TextBlock>
+
+         <TextBlock Text="Дата:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
+        <xctk:DateTimePicker x:Name="dpIssueDate" Value="{Binding CurrentDateTime, Mode=OneWay}" IsEnabled="False" Grid.Row="1" Grid.Column="1" Height="40" Width="400" FontSize="25"/>
+
+        <TextBlock Text="Ключ:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="cbKey" DisplayMemberPath="AudienceNumber" Height="40" Width="400" Grid.Row="2" Grid.Column="1" FontSize="25"/>
+
+        <TextBlock Text="Сотрудник:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right" Margin="10,0,0,0"/>
+        <ComboBox x:Name="cbEmployee" DisplayMemberPath="FullName" Height="40" Width="400" Grid.Row="3" Grid.Column="1" FontSize="25"/>
+
+        <Button Content="ВЫДАТЬ" Click="IssueButton_Click" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,250,0"/>
+        <Button Content="ОТМЕНА" IsCancel="True" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Margin="100,0,0,0"/>
+    </Grid>
+</Window>
