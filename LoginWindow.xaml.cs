@@ -51,7 +51,7 @@ namespace DiplomVersion1
         private void OpenMainWindow()
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            mainWindow.ShowDialog();
             Close();
         }
     }

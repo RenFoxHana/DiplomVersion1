@@ -1,6 +1,7 @@
 ﻿using DiplomVersion1.Model;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DiplomVersion1.Windows
@@ -12,6 +13,7 @@ namespace DiplomVersion1.Windows
     {
         private int? SelectedInstituteId { get; set; }
         public Department department { get; set; }
+        private List<Institute> allInstitutes;
         public NewDepartmentWindow(Department _department)
         {
             InitializeComponent();
@@ -27,12 +29,29 @@ namespace DiplomVersion1.Windows
             }
         }
 
+        private void ComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                string searchText = comboBox.Text.ToLower();
+
+                if (comboBox == cbInstitute)
+                {
+                    var filteredItems = allInstitutes
+                        .Where(item => item.NameIns.ToLower().Contains(searchText))
+                        .ToList();
+                    comboBox.ItemsSource = filteredItems;
+                }
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+
         private void LoadInstitutes()
         {
             using (var context = new BochagovaDiplomContext())
             {
-                var institutes = context.Institutes.ToList();
-                cbInstitute.ItemsSource = institutes;
+                allInstitutes = context.Institutes.ToList();
+                cbInstitute.ItemsSource = allInstitutes;
             }
         }
 

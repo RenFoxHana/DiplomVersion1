@@ -29,15 +29,15 @@
 
         <TextBlock Text="Институт:" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0"
         VerticalAlignment="Center" FontSize="25"/>
-        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" 
-          VerticalAlignment="Center" FontSize="25" x:Name="cbInstitute"
-          DisplayMemberPath="NameIns" SelectedValuePath="IdInstitute" SelectionChanged="CbInstitute_SelectionChanged"/>
+        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbInstitute" 
+                  DisplayMemberPath="NameIns" SelectedValuePath="IdInstitute" SelectionChanged="CbInstitute_SelectionChanged" IsEditable="True" IsTextSearchEnabled="True" 
+                  TextSearch.TextPath="NameIns" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
         <TextBlock Text="Подразделение:" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0"
                 VerticalAlignment="Center" FontSize="25"/>
-        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" 
-                  VerticalAlignment="Center" FontSize="25" x:Name="cbDepartment"
-                  DisplayMemberPath="NameDep" SelectedValuePath="IdDepartment" SelectionChanged="CbDepartment_SelectionChanged"/>
+        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbDepartment" 
+                  DisplayMemberPath="NameDep" SelectedValuePath="IdDepartment" SelectionChanged="CbDepartment_SelectionChanged" IsEditable="True" IsTextSearchEnabled="True" 
+                  TextSearch.TextPath="NameDep" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
         <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="4" Grid.Column="0" IsDefault="True" Click="BtSave_Click"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0"/>

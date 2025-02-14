@@ -1,7 +1,7 @@
 ﻿using DiplomVersion1.Model;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace DiplomVersion1.Windows
 {
@@ -13,6 +13,14 @@ namespace DiplomVersion1.Windows
         private int? SelectedDepartmentId { get; set; }
         private int? SelectedInstituteId { get; set; }
         public Model.Key key { get; set; }
+
+        private List<Department> allDepartmentsWithoutInstitutes;
+        private List<Institute> allInstitutes;
+
+        // Списки для хранения всех данных
+        private List<Department> allDepartments;
+        private List<Institute> allInstitutesCopy;
+
         public NewKeyWindow(Model.Key _key)
         {
             InitializeComponent();
@@ -43,20 +51,46 @@ namespace DiplomVersion1.Windows
         {
             using (var context = new BochagovaDiplomContext())
             {
-                var institutes = context.Institutes.ToList();
-                cbInstitute.ItemsSource = institutes;
-
-                // Загрузка подразделений, которые не принадлежат институтам
-                var departmentsWithoutInstitute = context.Departments
+                allInstitutes = context.Institutes.ToList();
+                allInstitutesCopy = allInstitutes.ToList();
+                cbInstitute.ItemsSource = allInstitutes;
+                
+                allDepartmentsWithoutInstitutes = context.Departments
                     .Where(d => d.IdInstitute == null)
                     .ToList();
 
-                cbDepartment.ItemsSource = departmentsWithoutInstitute;
+                allDepartments = allDepartmentsWithoutInstitutes.ToList();
+                cbDepartment.ItemsSource = allDepartmentsWithoutInstitutes;
                 cbDepartment.SelectedIndex = -1;
             }
         }
 
-        private void CbDepartment_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                string searchText = comboBox.Text.ToLower();
+
+                if (comboBox == cbInstitute)
+                {
+                    var filteredInstitutes = allInstitutesCopy
+                        .Where(institute => institute.NameIns.ToLower().Contains(searchText))
+                        .ToList();
+                    comboBox.ItemsSource = filteredInstitutes;
+                }
+                else if (comboBox == cbDepartment)
+                {
+                    var filteredDepartments = allDepartments
+                        .Where(department => department.NameDep.ToLower().Contains(searchText))
+                        .ToList();
+                    comboBox.ItemsSource = filteredDepartments;
+                }
+
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void CbDepartment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedDepartment = cbDepartment.SelectedItem as Department;
             if (selectedDepartment != null)
@@ -69,30 +103,32 @@ namespace DiplomVersion1.Windows
             }
         }
 
-        private void CbInstitute_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CbInstitute_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             using (var context = new BochagovaDiplomContext())
             {
                 var selectedInstitute = cbInstitute.SelectedItem as Institute;
 
                 if (selectedInstitute != null)
-                {                    
+                {
                     SelectedInstituteId = selectedInstitute.IdInstitute;
 
                     var departments = context.Departments
                         .Where(d => d.IdInstitute == selectedInstitute.IdInstitute)
                         .ToList();
 
+                    allDepartments = departments.ToList();
                     cbDepartment.ItemsSource = departments;
                 }
                 else
-                {                    
+                {
                     SelectedInstituteId = null;
 
                     var departmentsWithoutInstitute = context.Departments
                         .Where(d => d.IdInstitute == null)
                         .ToList();
 
+                    allDepartments = departmentsWithoutInstitute.ToList();
                     cbDepartment.ItemsSource = departmentsWithoutInstitute;
                 }
 

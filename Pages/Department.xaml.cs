@@ -59,13 +59,13 @@ namespace DiplomVersion1.Pages
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Close();
+            Window.GetWindow(this)?.Close();
         }
 
         private void ButtonMenu_Click(object sender, RoutedEventArgs e)
         {
             MenuWindow menuWindow = new MenuWindow(MainWindow, MainWindow.MainFrame);
-            menuWindow.Show();
+            menuWindow.ShowDialog();
         }
     }
 }

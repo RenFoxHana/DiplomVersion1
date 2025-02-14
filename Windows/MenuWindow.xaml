@@ -5,17 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomVersion1.Windows"
         mc:Ignorable="d"
-        Title="Меню" Height="580" Width="250" Background="#FFF0F0F0">
+        Title="Меню" Height="580" Width="270" Background="#FFF0F0F0">
     <Grid>
-        <Rectangle Width="250" Height="50" VerticalAlignment="Top" Fill="#D9D9D9" />
+        <Rectangle Width="270" Height="50" VerticalAlignment="Top" Fill="#D9D9D9" />
         <TextBlock FontSize="30" TextAlignment="Center"  HorizontalAlignment="Center" Margin="0,5,0,0" >МЕНЮ</TextBlock>
-
 
         <Menu VerticalAlignment="Center" Height="470" HorizontalAlignment="Center" Margin="0,30,0,0">
             <Button Style="{StaticResource ButtonLeftMenu}" Content="ЖУРНАЛ" Click="ButtonJournal_Click"/>
             <Button Style="{StaticResource ButtonLeftMenu}" Content="КЛЮЧИ" Click="ButtonKey_Click"/>
             <Button Style="{StaticResource ButtonLeftMenu}" Content="СОТРУДНИКИ" Click="ButtonEmp_Click"/>
-            <Button Style="{StaticResource ButtonLeftMenu}" Content="КАФЕДРЫ" Click="ButtonDep_Click"/>
+            <Button Style="{StaticResource ButtonLeftMenu}" Content="ПОДРАЗДЕЛЕНИЯ" Click="ButtonDep_Click"/>
             <Button Style="{StaticResource ButtonLeftMenu}" Content="ИНСТИТУТЫ" Click="ButtonIns_Click"/>
             <Button Style="{StaticResource ButtonLeftMenu}" Content="ДОЛЖНОСТИ" Click="ButtonPost_Click"/>
             <Button Style="{StaticResource ButtonLeftMenu}" Content="ВАХТЁРЫ" Click="ButtonWM_Click"/>

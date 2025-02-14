@@ -9,7 +9,7 @@
 
     <Style x:Key="ButtonLeftMenu">
         <Setter Property="Button.Margin" Value="0,10,0,10"/>
-        <Setter Property="Button.Width" Value="200"/>
+        <Setter Property="Button.Width" Value="220"/>
         <Setter Property="Button.Height" Value="45"/>
         <Setter Property="Button.FontSize" Value="25"/>
         <Setter Property="Button.HorizontalContentAlignment" Value="Center"/>

@@ -1,6 +1,7 @@
 ﻿using DiplomVersion1.Model;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DiplomVersion1.Windows
@@ -13,6 +14,9 @@ namespace DiplomVersion1.Windows
         private int? SelectedDepartmentId { get; set; }
         private int? SelectedPostId { get; set; }
         public Employee employee { get; set; }
+
+        private List<Post> allPosts;
+        private List<Department> allDepartments;
         public NewEmployeeWindow(Employee _employee)
         {
             InitializeComponent();
@@ -41,10 +45,34 @@ namespace DiplomVersion1.Windows
         {
             using (var context = new BochagovaDiplomContext())
             {
-                var departments = context.Departments.ToList();
-                cbDepartment.ItemsSource = departments;
-                var posts = context.Posts.ToList();
-                cbPost.ItemsSource = posts;
+                allDepartments = context.Departments.ToList();
+                cbDepartment.ItemsSource = allDepartments;
+                allPosts = context.Posts.ToList();
+                cbPost.ItemsSource = allPosts;
+            }
+        }
+
+        private void ComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                string searchText = comboBox.Text.ToLower();
+
+                if (comboBox == cbDepartment)
+                {
+                    var filteredItems = allDepartments
+                        .Where(item => item.NameDep.ToLower().Contains(searchText))
+                        .ToList();
+                    comboBox.ItemsSource = filteredItems;
+                }
+                else if (comboBox == cbPost)
+                {
+                    var filteredItems = allPosts
+                        .Where(item => item.NamePost.ToLower().Contains(searchText))
+                        .ToList();
+                    comboBox.ItemsSource = filteredItems;
+                }
+                comboBox.IsDropDownOpen = true;
             }
         }
 

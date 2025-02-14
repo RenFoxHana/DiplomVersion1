@@ -41,10 +41,12 @@
                   VerticalAlignment="Center" Text="{Binding FirstName}" FontSize="25" x:Name="tbFirstName"/>
         <TextBox Height="40" Width="400" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="3" Grid.Column="1" 
                   VerticalAlignment="Center" Text="{Binding Patronymic}" FontSize="25" x:Name="tbPatronymic"/>
-        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontSize="25" 
-                  x:Name="cbDepartment" DisplayMemberPath="NameDep" SelectedValuePath="IdDepartment" SelectionChanged="CbDepartment_SelectionChanged"/>
-        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" FontSize="25" 
-                  x:Name="cbPost" DisplayMemberPath="NamePost" SelectedValuePath="IdPost" SelectionChanged="CbPost_SelectionChanged"/>
+        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbDepartment" 
+                  DisplayMemberPath="NameDep" SelectedValuePath="IdDepartment" SelectionChanged="CbDepartment_SelectionChanged" IsEditable="True" IsTextSearchEnabled="True" 
+                  TextSearch.TextPath="NameDep" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbPost" 
+                  DisplayMemberPath="NamePost" SelectedValuePath="IdPost" SelectionChanged="CbPost_SelectionChanged" IsEditable="True" IsTextSearchEnabled="True" 
+                  TextSearch.TextPath="NamePost" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
         <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="6" Grid.Column="0" IsDefault="True" Click="BtSave_Click"
         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0"/>

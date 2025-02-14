@@ -65,7 +65,7 @@ namespace DiplomVersion1.Pages
         private void ButtonMenu_Click(object sender, RoutedEventArgs e)
         {
             MenuWindow menuWindow = new MenuWindow(MainWindow, MainWindow.MainFrame);
-            menuWindow.Show();
+            menuWindow.ShowDialog();
         }
 
     }
