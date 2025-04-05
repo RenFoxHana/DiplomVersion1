@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DiplomVersion1.Windows"
       mc:Ignorable="d"      
-      Title="NewDepartmentWindow" Height="230" Width="640">
+      Title="NewDepartmentWindow" Height="260" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210" />
@@ -16,27 +16,30 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Rectangle Width="Auto" Height="35" VerticalAlignment="Top" Fill="#D9D9D9" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
         <Label FontSize="18" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="СОЗДАНИЕ ПОДРАЗДЕЛЕНИЯ" x:Name="label"/>
 
-        <TextBlock Text="Подразделение:" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0"
-           VerticalAlignment="Center" FontSize="25"/>
+        <TextBlock Text="Подразделение:" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="25"/>
 
-        <TextBox Height="40" Width="400" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="1" Grid.Column="1" 
+        <TextBox Height="40" Width="550" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="1" Grid.Column="1" 
                  VerticalAlignment="Center" Text="{Binding NameDep}" FontSize="25" x:Name="tbNameDepartment"/>
 
-        <TextBlock Text="Институт:" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0"
-                VerticalAlignment="Center" FontSize="25"/>
+        <TextBlock Text="Институт:" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="25"/>
 
-        <ComboBox Height="40" Width="400" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbInstitute" 
+        <ComboBox Height="40" Width="550" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="25" x:Name="cbInstitute" 
                   DisplayMemberPath="NameIns" SelectedValuePath="IdInstitute" SelectionChanged="CbInstitute_SelectionChanged" IsEditable="True" IsTextSearchEnabled="True" 
                   TextSearch.TextPath="NameIns" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
-        <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="3" Grid.Column="0" IsDefault="True" Click="BtSave_Click"
+        <TextBlock Text="Контактная инфо:" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="25"/>
+        <TextBox Height="40" Width="550" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding ContactInformation}" 
+                 FontSize="25" x:Name="tbContactInfo"/>
+
+        <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="4" Grid.Column="0" IsDefault="True" Click="BtSave_Click"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0"/>
-        <Button Content="ОТМЕНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="3" Grid.Column="1" IsCancel="True"
+        <Button Content="ОТМЕНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="4" Grid.Column="1" IsCancel="True"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Margin="170,0,0,0"/>
     </Grid>
 </Window>

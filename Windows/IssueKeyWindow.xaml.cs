@@ -99,6 +99,22 @@ namespace DiplomVersion1.Windows
                 return;
             }
 
+            if (selectedKey.IdDepartment.HasValue)
+            {
+                if (!selectedEmployee.IdDepartment.HasValue || selectedKey.IdDepartment != selectedEmployee.IdDepartment)
+                {
+                    using (var db = new BochagovaDiplomContext())
+                    {
+                        var departmentName = db.Departments
+                            .FirstOrDefault(dep => dep.IdDepartment == selectedKey.IdDepartment.Value)?.NameDep;
+
+                        MessageBox.Show($"Данный ключ принадлежит подразделению: {departmentName}. " +
+                                        $"Сотрудник не может получить ключ.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+            }
+
             using (var db = new BochagovaDiplomContext())
             {
                 var logEntry = new LogOfIssuingKey

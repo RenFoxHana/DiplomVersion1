@@ -101,5 +101,14 @@ namespace DiplomVersion1.Windows
                 MessageBox.Show("Вводите в поле названия подразделения только буквы.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        private void Contact_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length <= 5)
+            {
+                MessageBox.Show("Введите корректную контактную информацию подразделения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
     }
 }

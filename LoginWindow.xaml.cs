@@ -43,7 +43,6 @@ namespace DiplomVersion1
                     OpenMainWindow();
                     return;
                 }
-
                 ErrorTextBlock.Visibility = Visibility.Visible;
             }
         }
@@ -51,8 +50,8 @@ namespace DiplomVersion1
         private void OpenMainWindow()
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.ShowDialog();
             Close();
+            mainWindow.ShowDialog();            
         }
     }
 }

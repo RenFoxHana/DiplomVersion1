@@ -30,7 +30,7 @@ namespace DiplomVersion1.Pages
             using (var context = new BochagovaDiplomContext())
             {
                 var departments = context.Departments
-                    .Include(d => d.IdInstituteNavigation) 
+                    .Include(d => d.IdInstituteNavigation)
                     .ToList();
 
                 listDepartment.ItemsSource = departments;
@@ -59,7 +59,9 @@ namespace DiplomVersion1.Pages
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
+            LoginWindow loginWindow = new LoginWindow();
             Window.GetWindow(this)?.Close();
+            loginWindow.ShowDialog();
         }
 
         private void ButtonMenu_Click(object sender, RoutedEventArgs e)

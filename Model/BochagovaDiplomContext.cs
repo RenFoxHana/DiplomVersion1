@@ -72,15 +72,14 @@ public partial class BochagovaDiplomContext : DbContext
         modelBuilder.Entity<Department>(entity =>
         {
             entity.HasKey(e => e.IdDepartment).HasName("PK__Departme__E1319564F686B971");
-
             entity.ToTable("Department");
-
             entity.Property(e => e.IdDepartment).HasColumnName("ID_Department");
             entity.Property(e => e.IdInstitute).HasColumnName("ID_Institute");
             entity.Property(e => e.NameDep)
                 .HasMaxLength(70)
                 .IsUnicode(false);
-
+            entity.Property(e => e.ContactInformation)
+                .HasMaxLength(500);
             entity.HasOne(d => d.IdInstituteNavigation).WithMany(p => p.Departments)
                 .HasForeignKey(d => d.IdInstitute)
                 .HasConstraintName("FK__Departmen__ID_In__403A8C7D");

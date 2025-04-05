@@ -8,6 +8,8 @@ public partial class Department
 
     public int? IdInstitute { get; set; }
 
+    public string? ContactInformation { get; set; }
+
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     public virtual Institute? IdInstituteNavigation { get; set; }
