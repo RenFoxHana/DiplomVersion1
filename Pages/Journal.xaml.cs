@@ -14,6 +14,9 @@ namespace DiplomVersion1.Pages
     {
         MainWindow MainWindow { get; set; }
 
+        // Хранение всех данных журнала
+        private List<LogOfIssuingKey> allLogs;
+
         public Journal(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -24,18 +27,19 @@ namespace DiplomVersion1.Pages
                 FindName("ReturnButton") as Button
             );
         }
+
         private void LoadJournalData()
         {
             using (var db = new BochagovaDiplomContext())
             {
-                var journalEntries = db.LogOfIssuingKeys
-                    .Include(log => log.IdKeyNavigation)                    
+                allLogs = db.LogOfIssuingKeys
+                    .Include(log => log.IdKeyNavigation)
                     .Include(log => log.IdEmployeeNavigation)
                     .ThenInclude(emp => emp.IdDepartmentNavigation)
                     .Include(log => log.IdWatchmanNavigation)
                     .ToList();
 
-                listJournal.ItemsSource = journalEntries;
+                listJournal.ItemsSource = allLogs;
             }
         }
 
@@ -76,6 +80,72 @@ namespace DiplomVersion1.Pages
         {
             MenuWindow menuWindow = new MenuWindow(MainWindow, MainWindow.MainFrame);
             menuWindow.ShowDialog();
+        }
+
+        private void Filters_Click(object sender, RoutedEventArgs e)
+        {
+            var filtersWindow = new FiltersWindow();
+
+            filtersWindow.FiltersApplied += ApplyFilters;
+
+            filtersWindow.ShowDialog();
+        }
+
+        private void ApplyFilters(DateTime? startDateIssue, DateTime? endDateIssue, DateTime? startDateReturn, DateTime? endDateReturn, Model.Employee employee, Key key)
+        {
+            var filteredLogs = allLogs.AsQueryable();
+
+            if (startDateIssue.HasValue && endDateIssue.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log =>
+                    log.DateTimeOfIssue >= startDateIssue.Value &&
+                    log.DateTimeOfIssue <= endDateIssue.Value);
+            }
+            else if (startDateIssue.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log => log.DateTimeOfIssue >= startDateIssue.Value);
+            }
+            else if (endDateIssue.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log => log.DateTimeOfIssue <= endDateIssue.Value);
+            }
+
+            if (startDateReturn.HasValue && endDateReturn.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log =>
+                    log.DateTimeOfDelivery.HasValue &&
+                    log.DateTimeOfDelivery.Value >= startDateReturn.Value &&
+                    log.DateTimeOfDelivery.Value <= endDateReturn.Value);
+            }
+            else if (startDateReturn.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log =>
+                    log.DateTimeOfDelivery.HasValue &&
+                    log.DateTimeOfDelivery.Value >= startDateReturn.Value);
+            }
+            else if (endDateReturn.HasValue)
+            {
+                filteredLogs = filteredLogs.Where(log =>
+                    log.DateTimeOfDelivery.HasValue &&
+                    log.DateTimeOfDelivery.Value <= endDateReturn.Value);
+            }
+
+            if (employee != null)
+            {
+                filteredLogs = filteredLogs.Where(log => log.IdEmployee == employee.IdEmployee);
+            }
+
+            if (key != null)
+            {
+                filteredLogs = filteredLogs.Where(log => log.IdKey == key.IdKey);
+            }
+
+            listJournal.ItemsSource = filteredLogs.ToList();
+        }
+
+        private void ResetFilters_Click(object sender, RoutedEventArgs e)
+        {
+            listJournal.ItemsSource = allLogs;
         }
     }
 }

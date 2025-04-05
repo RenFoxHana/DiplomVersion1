@@ -32,8 +32,8 @@
           IsEditable="True" IsTextSearchEnabled="True" TextSearch.TextPath="AudienceNumber" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
         <TextBlock Text="Сотрудник:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right" Margin="10,0,0,0"/>
-        <ComboBox x:Name="cbEmployee" DisplayMemberPath="FullName" Height="40" Width="400" Grid.Row="3" Grid.Column="1" FontSize="25"
-          IsEditable="True" IsTextSearchEnabled="True" TextSearch.TextPath="FullName" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+        <ComboBox x:Name="cbEmployee" DisplayMemberPath="FullName" Height="40" Width="400" Grid.Row="3" Grid.Column="1" FontSize="25" IsEditable="True" 
+                  IsTextSearchEnabled="True" TextSearch.TextPath="FullName" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
 
         <Button Content="ВЫДАТЬ" Click="IssueButton_Click" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,250,0"/>
         <Button Content="ОТМЕНА" IsCancel="True" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Margin="100,0,0,0"/>

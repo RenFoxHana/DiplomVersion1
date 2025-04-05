@@ -17,7 +17,8 @@
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="МЕНЮ" Click="ButtonMenu_Click" Margin="10,0,80,0" />
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="ВЫДАЧА КЛЮЧА" Margin="10,0,50,0" Click="IssueKey_Click" x:Name="IssueButton"/>
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="СДАЧА КЛЮЧА" Click="ReturnKey_Click" x:Name="ReturnButton"/>
-            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ФИЛЬТРЫ" Margin="700,0,20,0" />
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="ФИЛЬТРЫ" Margin="500,0,20,0" Click="Filters_Click" />
+            <Button Style="{StaticResource ButtonJobDataMenu}" Content="СБРОСИТЬ" Margin="0,0,20,0" Click="ResetFilters_Click" />
         </Menu>
 
         <ListView ItemsSource="{Binding}" Width="1920" Height="870" VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Center"
