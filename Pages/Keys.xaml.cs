@@ -32,6 +32,7 @@ namespace DiplomVersion1.Pages
                 var keys = context.Keys
                     .Include(d => d.IdInstituteNavigation)
                     .Include(d => d.IdDepartmentNavigation)
+                    .OrderBy(d => d.AudienceNumber)
                     .ToList();
 
                 listKeys.ItemsSource = keys;

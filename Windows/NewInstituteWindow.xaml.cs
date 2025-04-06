@@ -17,7 +17,7 @@ namespace DiplomVersion1.Windows
             institute = _institute;
             DataContext = institute;
 
-            if (institute != null)
+            if (institute.IdInstitute != 0)
             {
                 label.Content = "РЕДАКТИРОВАНИЕ ИНСТИТУТА";
             }

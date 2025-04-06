@@ -24,7 +24,8 @@ namespace DiplomVersion1.Windows
 
             employee = _employee;
             DataContext = employee;
-            if (employee != null) {
+            if (employee.IdEmployee != 0)
+            {
                 label.Content = "РЕДАКТИРОВАНИЕ СОТРУДНИКА";
             }
 
@@ -134,7 +135,6 @@ namespace DiplomVersion1.Windows
 
             Close();
         }
-
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

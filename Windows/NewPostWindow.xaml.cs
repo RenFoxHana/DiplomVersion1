@@ -17,7 +17,7 @@ namespace DiplomVersion1.Windows
             post = _post;
             DataContext = post;
 
-            if (post != null)
+            if (post.IdPost != 0)
             {
                 label.Content = "РЕДАКТИРОВАНИЕ ДОЛЖНОСТИ";
             }

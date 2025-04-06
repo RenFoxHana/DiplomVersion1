@@ -1,5 +1,4 @@
 ﻿using DiplomVersion1.Model;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -29,7 +28,7 @@ namespace DiplomVersion1.Windows
             key = _key;
             DataContext = key;
 
-            if (key != null)
+            if (key.IdKey != 0)
             {
                 label.Content = "РЕДАКТИРОВАНИЕ КЛЮЧА";
             }

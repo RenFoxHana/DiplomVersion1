@@ -18,7 +18,9 @@ namespace DiplomVersion1.Pages
         {
             InitializeComponent();
             db.Posts.Load();
-            DataContext = db.Posts.Local.ToObservableCollection();
+            DataContext = db.Posts
+                .OrderBy(d => d.NamePost)
+                .ToList();
             MainWindow = mainWindow;
             UIHelper.ConfigureUIForWatchman(
                 FindName("AddButton") as Button,

@@ -10,7 +10,7 @@
 
     <Grid Background="White">
         <Rectangle Width="1920" Height="100" VerticalAlignment="Top" Fill="#D9D9D9"  />
-        <TextBlock FontSize="48" TextAlignment="Center" Height="100" Margin="0,20,0,0"  VerticalAlignment="Top">ВАХТЁРЫ</TextBlock>
+        <TextBlock FontSize="48" TextAlignment="Center" Height="100" Margin="0,20,0,0"  VerticalAlignment="Top">ВАХТЕРЫ</TextBlock>
         <Button Background="#C5C5C5" Content="ВЫХОД" Width="205" Height="60" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,100,0"/>
 
         <Menu Width="875" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,1035,0" HorizontalAlignment="Right" >
@@ -25,9 +25,9 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="Фамилия"
-                    DisplayMemberBinding="{Binding FirstNameWm}" />
-                        <GridViewColumn Header="Имя"
                     DisplayMemberBinding="{Binding LastNameWm}" />
+                        <GridViewColumn Header="Имя"
+                    DisplayMemberBinding="{Binding FirstNameWm}" />
                         <GridViewColumn Header="Отчество"
                     DisplayMemberBinding="{Binding PatronymicWm}" />
                     </GridView.Columns>

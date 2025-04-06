@@ -31,6 +31,7 @@ namespace DiplomVersion1.Pages
             {
                 var departments = context.Departments
                     .Include(d => d.IdInstituteNavigation)
+                    .OrderBy(d => d.NameDep)
                     .ToList();
 
                 listDepartment.ItemsSource = departments;

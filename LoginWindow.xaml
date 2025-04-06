@@ -18,7 +18,7 @@
             <PasswordBox x:Name="PasswordBox" Width="250" Height="30" Margin="0,0,0,20" FontSize="16"/>
 
             <Button Content="ВОЙТИ" Width="100" Height="30" Click="LoginButton_Click" Style="{StaticResource ButtonJobDataMenu}" FontSize="16"/>
-            
+
         </StackPanel>
 
         <TextBlock x:Name="ErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Неверный логин или пароль" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15" FontSize="20"/>

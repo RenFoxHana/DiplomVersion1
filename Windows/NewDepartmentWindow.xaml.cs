@@ -22,6 +22,10 @@ namespace DiplomVersion1.Windows
             department = _department;
             DataContext = department;
 
+            if(department.IdDepartment != 0)
+            {
+                label.Content = "РЕДАКТИРОВАНИЕ ПОДРАЗДЕЛЕНИЯ";
+            }
             if (department.IdInstitute != null)
             {
                 SelectedInstituteId = department.IdInstitute.Value;

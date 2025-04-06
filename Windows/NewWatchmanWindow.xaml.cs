@@ -20,7 +20,7 @@ namespace DiplomVersion1.Windows
 
             watchman = _watchman;
             DataContext = watchman;
-            if (watchman != null)
+            if (watchman.IdWatchman != 0)
             {
                 label.Content = "РЕДАКТИРОВАНИЕ ВАХТЁРА";
                 IsEdit = true;
