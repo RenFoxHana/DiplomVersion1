@@ -18,7 +18,7 @@ namespace DiplomVersion1.Pages
         {
             InitializeComponent();
             db.Watchmen.Load();
-            DataContext = db.Watchmen.Local.ToObservableCollection();
+            DataContext = db.Watchmen.ToList();
             MainWindow = mainWindow;
             UIHelper.ConfigureUIForWatchman(
                 FindName("AddButton") as Button,

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Vladimir_State_University_emblem.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
@@ -31,6 +35,10 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\net8.0-windows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Vladimir_State_University_emblem.png" />
   </ItemGroup>
 
 </Project>

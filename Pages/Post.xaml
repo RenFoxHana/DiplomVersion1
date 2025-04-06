@@ -12,7 +12,8 @@
         <Rectangle Width="1920" Height="100" VerticalAlignment="Top" Fill="#D9D9D9"  />
         <TextBlock FontSize="48" TextAlignment="Center" Height="100" Margin="0,20,0,0"  VerticalAlignment="Top">ДОЛЖНОСТИ</TextBlock>
         <Button Background="#C5C5C5" Content="ВЫХОД" Width="205" Height="60" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,100,0"/>
-
+        <Image Source="/Images/Vladimir_State_University_emblem.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Margin="21,0,0,0"/>
+        
         <Menu Width="950" Height="60" Background="White" VerticalAlignment="Top" Margin="0,120,960,0" HorizontalAlignment="Right" >
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="МЕНЮ" Click="ButtonMenu_Click" Margin="10,0,80,0" />
             <Button Style="{StaticResource ButtonJobDataMenu}" Content="СОЗДАТЬ" Margin="10,0,50,0" Click="Add_Click" x:Name="AddButton"/>

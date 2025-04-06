@@ -25,12 +25,26 @@ namespace DiplomVersion1.Windows
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
+            if (dpReturnDate.Value == null)
+            {
+                MessageBox.Show("Выберите дату сдачи.");
+                return;
+            }
+
+            DateTime returnDate = dpReturnDate.Value.Value;
+
+            if (returnDate <= _selectedLogEntry.DateTimeOfIssue)
+            {
+                MessageBox.Show("Дата сдачи не может быть раньше или равна дате выдачи.");
+                return;
+            }
+
             using (var db = new BochagovaDiplomContext())
             {
                 var logEntry = db.LogOfIssuingKeys.Find(_selectedLogEntry.IdEntry);
                 if (logEntry != null)
                 {
-                    logEntry.DateTimeOfDelivery = dpReturnDate.Value;
+                    logEntry.DateTimeOfDelivery = returnDate;
                     db.LogOfIssuingKeys.Update(logEntry);
                     db.SaveChanges();
                 }

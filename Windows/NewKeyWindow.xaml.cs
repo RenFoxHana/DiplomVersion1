@@ -169,7 +169,6 @@ namespace DiplomVersion1.Windows
             }
 
             MessageBox.Show("Ключ успешно сохранен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
             Close();
         }
     }

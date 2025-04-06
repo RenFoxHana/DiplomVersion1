@@ -80,7 +80,6 @@ namespace DiplomVersion1.Windows
                     return;
                 }
 
-
                 string hashedPassword = PasswordHasher.HashPassword(password);
 
                 watchman.WmLogin = login;
