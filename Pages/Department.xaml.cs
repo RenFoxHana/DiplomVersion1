@@ -41,7 +41,8 @@ namespace DiplomVersion1.Pages
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewDepartmentWindow DepartmentWindow = new NewDepartmentWindow(new Model.Department());
-            DepartmentWindow.ShowDialog();
+            if (DepartmentWindow.ShowDialog() == true)
+                LoadDepartments();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)

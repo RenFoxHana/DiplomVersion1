@@ -17,10 +17,7 @@ namespace DiplomVersion1.Pages
         public Institute(MainWindow mainWindow)
         {
             InitializeComponent();
-            db.Institutes.Load();
-            DataContext = db.Institutes
-                .OrderBy(d => d.NameIns)
-                .ToList();
+            LoadInstitutes();
             MainWindow = mainWindow;
             UIHelper.ConfigureUIForWatchman(
                 FindName("AddButton") as Button,
@@ -28,14 +25,25 @@ namespace DiplomVersion1.Pages
             );
         }
 
+        private void LoadInstitutes()
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                var institutes = context.Institutes
+                    .Include(i => i.Departments)
+                    .OrderBy(d => d.NameIns)
+                    .ToList();
+
+                listInstitute.ItemsSource = institutes;
+            }
+        }
+
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewInstituteWindow InstituteWindow = new NewInstituteWindow(new Model.Institute());
             if (InstituteWindow.ShowDialog() == true)
             {
-                Model.Institute institute = InstituteWindow.institute;
-                db.Institutes.Add(institute);
-                db.SaveChanges();
+                LoadInstitutes();
             }
         }
 
@@ -43,21 +51,16 @@ namespace DiplomVersion1.Pages
         {
             Model.Institute? institute = listInstitute.SelectedItem as Model.Institute;
 
-            if (institute is null) return;
-
-            NewInstituteWindow InstituteWindow = new NewInstituteWindow(new Model.Institute
+            if (institute is null)
             {
-                NameIns = institute.NameIns,
-            });
+                MessageBox.Show("Выберите институт для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            NewInstituteWindow InstituteWindow = new NewInstituteWindow(institute);
             if (InstituteWindow.ShowDialog() == true)
             {
-                if (institute != null)
-                {
-                    institute.NameIns = InstituteWindow.institute.NameIns;
-                    db.SaveChanges();
-                    listInstitute.Items.Refresh();
-                }
+                LoadInstitutes();
             }
         }
 

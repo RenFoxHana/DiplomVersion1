@@ -17,18 +17,29 @@ namespace DiplomVersion1.Pages
         public Watchman(MainWindow mainWindow)
         {
             InitializeComponent();
-            db.Watchmen.Load();
-            DataContext = db.Watchmen.ToList();
+            LoadWatchman();
             MainWindow = mainWindow;
             UIHelper.ConfigureUIForWatchman(
                 FindName("AddButton") as Button,
                 FindName("EditButton") as Button
             );
-        }        
+        }
+
+        private void LoadWatchman()
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                var watchmans = context.Watchmen
+                    .ToList();
+
+                listWatchman.ItemsSource = watchmans;
+            }
+        }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewWatchmanWindow WatchmanWindow = new NewWatchmanWindow(new Model.Watchman());
-            WatchmanWindow.ShowDialog();
+            if (WatchmanWindow.ShowDialog() == true)
+                LoadWatchman();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
@@ -42,7 +53,8 @@ namespace DiplomVersion1.Pages
             }
 
             NewWatchmanWindow WatchmanWindow = new NewWatchmanWindow(selectedWatchman);
-            WatchmanWindow.ShowDialog();
+            if (WatchmanWindow.ShowDialog() == true)
+                LoadWatchman();
         }
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {

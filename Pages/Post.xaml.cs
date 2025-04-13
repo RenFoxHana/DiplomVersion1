@@ -12,15 +12,12 @@ namespace DiplomVersion1.Pages
     /// </summary>
     public partial class Post : Page
     {
-       BochagovaDiplomContext db = new BochagovaDiplomContext();
+        BochagovaDiplomContext db = new BochagovaDiplomContext();
         MainWindow MainWindow { get; set; }
         public Post(MainWindow mainWindow)
         {
             InitializeComponent();
-            db.Posts.Load();
-            DataContext = db.Posts
-                .OrderBy(d => d.NamePost)
-                .ToList();
+            LoadPosts();
             MainWindow = mainWindow;
             UIHelper.ConfigureUIForWatchman(
                 FindName("AddButton") as Button,
@@ -28,14 +25,24 @@ namespace DiplomVersion1.Pages
             );
         }
 
+        private void LoadPosts()
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                var posts = context.Posts
+                    .OrderBy(d => d.NamePost)
+                    .ToList();
+
+                listPost.ItemsSource = posts;
+            }
+        }
+
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewPostWindow PostWindow = new NewPostWindow(new Model.Post());
             if (PostWindow.ShowDialog() == true)
             {
-                Model.Post post = PostWindow.post;
-                db.Posts.Add(post);
-                db.SaveChanges();
+                LoadPosts();
             }
         }
 
@@ -43,21 +50,17 @@ namespace DiplomVersion1.Pages
         {
             Model.Post? post = listPost.SelectedItem as Model.Post;
 
-            if (post is null) return;
-
-            NewPostWindow PostWindow = new NewPostWindow(new Model.Post
+            if (post is null)
             {
-                NamePost = post.NamePost,
-            });
+                MessageBox.Show("Выберите должность для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            NewPostWindow PostWindow = new NewPostWindow(post);
 
             if (PostWindow.ShowDialog() == true)
             {
-                if (post != null)
-                {
-                    post.NamePost = PostWindow.post.NamePost;
-                    db.SaveChanges();
-                    listPost.Items.Refresh();
-                }
+                LoadPosts();
             }
         }
 

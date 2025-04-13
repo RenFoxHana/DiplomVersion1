@@ -123,7 +123,7 @@ public partial class BochagovaDiplomContext : DbContext
 
             entity.Property(e => e.IdInstitute).HasColumnName("ID_Institute");
             entity.Property(e => e.NameIns)
-                .HasMaxLength(70)
+                .HasMaxLength(200)
                 .IsUnicode(false);
         });
 

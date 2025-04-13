@@ -41,7 +41,8 @@ namespace DiplomVersion1.Pages
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewEmployeeWindow EmployeeWindow = new NewEmployeeWindow(new Model.Employee());
-            EmployeeWindow.ShowDialog();
+            if (EmployeeWindow.ShowDialog() == true)
+                LoadEmployees();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)

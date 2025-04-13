@@ -25,8 +25,8 @@
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Header="Институт"
-                DisplayMemberBinding="{Binding NameIns}" />
+                        <GridViewColumn Header="Институт" DisplayMemberBinding="{Binding NameIns}" />
+                        <GridViewColumn Header="Кафедры" DisplayMemberBinding="{Binding DisplayedDepartments}" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

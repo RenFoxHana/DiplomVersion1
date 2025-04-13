@@ -24,7 +24,7 @@
         VerticalAlignment="Center" FontSize="25"/>
 
         <TextBox Height="40" Width="400" HorizontalAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" Grid.Row="1" Grid.Column="1" 
-         VerticalAlignment="Center" Text="{Binding NamePost}" FontSize="25"/>
+         VerticalAlignment="Center" Text="{Binding NamePost}" FontSize="25" x:Name="tbPostName"/>
 
 
         <Button Content="СОХРАНИТЬ" Style="{StaticResource ButtonTopMenu}" Grid.Row="2" Grid.Column="0" IsDefault="True" Click="BtSave_Click"

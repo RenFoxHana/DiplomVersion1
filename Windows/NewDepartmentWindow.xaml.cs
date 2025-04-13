@@ -70,7 +70,14 @@ namespace DiplomVersion1.Windows
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            string departmentName = tbNameDepartment.Text;            
+            string departmentName = tbNameDepartment.Text;
+
+            string normalizedDepartmentName = departmentName.Trim();
+            if (IsDuplicateDepartment(normalizedDepartmentName, department.IdDepartment))
+            {
+                MessageBox.Show("Подразделение с таким названием уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             department.NameDep = departmentName;
             department.IdInstitute = SelectedInstituteId;
@@ -89,7 +96,6 @@ namespace DiplomVersion1.Windows
             }
 
             MessageBox.Show("Подразделение успешно сохранено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
             Close();
         }
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -112,6 +118,16 @@ namespace DiplomVersion1.Windows
             {
                 MessageBox.Show("Введите корректную контактную информацию подразделения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+        }
+        private bool IsDuplicateDepartment(string departmentName, int? excludeId = null)
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                string normalizedDepartmentName = departmentName.Trim().ToLower();
+
+                return context.Departments
+                    .Any(d => d.NameDep.Trim().ToLower() == normalizedDepartmentName && d.IdDepartment != excludeId);
             }
         }
     }

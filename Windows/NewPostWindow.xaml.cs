@@ -25,8 +25,34 @@ namespace DiplomVersion1.Windows
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            string postName = tbPostName.Text;
+
+            string normalizedPostName = postName.Trim();
+            if (IsDuplicatePost(normalizedPostName, post.IdPost))
+            {
+                MessageBox.Show("Должность с таким названием уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            post.NamePost = normalizedPostName;
+
+            using (var context = new BochagovaDiplomContext())
+            {
+                if (post.IdPost == 0)
+                {
+                    context.Posts.Add(post);
+                }
+                else
+                {
+                    context.Posts.Update(post);
+                }
+                context.SaveChanges();
+            }
+
+            MessageBox.Show("Должность успешно сохранена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            Close();
         }
+
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(e.Text))
@@ -38,6 +64,17 @@ namespace DiplomVersion1.Windows
             {
                 e.Handled = true;
                 MessageBox.Show("Вводите в поле названия должности только буквы.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private bool IsDuplicatePost(string postName, int? excludeId = null)
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                string normalizedPostName = postName.Trim().ToLower();
+
+                return context.Posts
+                    .Any(p => p.NamePost.Trim().ToLower() == normalizedPostName && p.IdPost != excludeId);
             }
         }
     }

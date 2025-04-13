@@ -42,7 +42,8 @@ namespace DiplomVersion1.Pages
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             NewKeyWindow KeyWindow = new NewKeyWindow(new Model.Key());
-            KeyWindow.ShowDialog();
+            if (KeyWindow.ShowDialog() == true)
+                LoadKeys();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)

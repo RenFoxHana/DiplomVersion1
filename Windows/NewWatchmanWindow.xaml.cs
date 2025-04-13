@@ -80,9 +80,17 @@ namespace DiplomVersion1.Windows
                     return;
                 }
 
+                string normalizedLogin = login.Trim();
+
+                if (IsDuplicateLogin(normalizedLogin))
+                {
+                    MessageBox.Show("Логин уже занят. Выберите другой логин.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 string hashedPassword = PasswordHasher.HashPassword(password);
 
-                watchman.WmLogin = login;
+                watchman.WmLogin = normalizedLogin;
                 watchman.WmPassword = hashedPassword;
             }
 
@@ -113,6 +121,17 @@ namespace DiplomVersion1.Windows
             {
                 e.Handled = true;
                 MessageBox.Show("Вводите в поле только русские буквы.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private bool IsDuplicateLogin(string login, int? excludeId = null)
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                string normalizedLogin = login.Trim().ToLower();
+
+                return context.Watchmen
+                    .Any(w => w.WmLogin.Trim().ToLower() == normalizedLogin && w.IdWatchman != excludeId);
             }
         }
     }

@@ -25,7 +25,32 @@ namespace DiplomVersion1.Windows
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            string instituteName = tbNameInstitute.Text;
+
+            string normalizedInstituteName = instituteName.Trim();
+            if (IsDuplicateInstitute(normalizedInstituteName, institute.IdInstitute))
+            {
+                MessageBox.Show("Институт с таким названием уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            institute.NameIns = normalizedInstituteName;
+
+            using (var context = new BochagovaDiplomContext())
+            {
+                if (institute.IdInstitute == 0)
+                {
+                    context.Institutes.Add(institute);
+                }
+                else
+                {
+                    context.Institutes.Update(institute);
+                }
+                context.SaveChanges();
+            }
+
+            MessageBox.Show("Институт успешно сохранен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            Close();
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -39,6 +64,17 @@ namespace DiplomVersion1.Windows
             {
                 e.Handled = true;
                 MessageBox.Show("Вводите в поле названия института только буквы.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private bool IsDuplicateInstitute(string instituteName, int? excludeId = null)
+        {
+            using (var context = new BochagovaDiplomContext())
+            {
+                string normalizedInstituteName = instituteName.Trim().ToLower();
+
+                return context.Institutes
+                    .Any(i => i.NameIns.Trim().ToLower() == normalizedInstituteName && i.IdInstitute != excludeId);
             }
         }
     }
