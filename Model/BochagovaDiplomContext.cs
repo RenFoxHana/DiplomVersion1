@@ -145,6 +145,7 @@ public partial class BochagovaDiplomContext : DbContext
                 .HasConstraintName("FK_Key_Department");
 
             entity.Property(e => e.IdInstitute).HasColumnName("ID_Institute");
+            entity.Property(e => e.QrCodeBase64);
 
             entity.HasOne(d => d.IdInstituteNavigation).WithMany(p => p.Keys)
                 .HasForeignKey(d => d.IdInstitute)
@@ -167,6 +168,7 @@ public partial class BochagovaDiplomContext : DbContext
             entity.Property(e => e.IdEmployee).HasColumnName("ID_Employee");
             entity.Property(e => e.IdKey).HasColumnName("ID_Key");
             entity.Property(e => e.IdWatchman).HasColumnName("ID_Watchman");
+            entity.Property(e => e.Signature).HasColumnName("Signature");
 
             entity.HasOne(d => d.IdEmployeeNavigation).WithMany(p => p.LogOfIssuingKeys)
                 .HasForeignKey(d => d.IdEmployee)

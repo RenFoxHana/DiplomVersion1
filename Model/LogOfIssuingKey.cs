@@ -13,6 +13,7 @@ public partial class LogOfIssuingKey
     public DateTime DateTimeOfIssue { get; set; }
 
     public DateTime? DateTimeOfDelivery { get; set; }
+    public byte[]? Signature { get; set; }
 
     public virtual Employee IdEmployeeNavigation { get; set; } = null!;
 

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="ButtonTopMenu">
-        <Setter Property="Button.FontSize" Value="25"/>
+        <Setter Property="Button.FontSize" Value="20"/>
         <Setter Property="Button.HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Border.BorderThickness" Value="3"/>
         <Setter Property="Button.Background" Value="#C5C5C5" />

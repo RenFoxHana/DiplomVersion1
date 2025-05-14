@@ -4,6 +4,7 @@ using DiplomVersion1.Windows;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace DiplomVersion1.Pages
 {
@@ -37,9 +38,56 @@ namespace DiplomVersion1.Pages
                     .Include(log => log.IdEmployeeNavigation)
                     .ThenInclude(emp => emp.IdDepartmentNavigation)
                     .Include(log => log.IdWatchmanNavigation)
+                    .OrderByDescending(log => log.DateTimeOfIssue)
                     .ToList();
 
                 listJournal.ItemsSource = allLogs;
+            }
+        }
+
+        private void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var selectedEntry = listJournal.SelectedItem as LogOfIssuingKey;
+            if (selectedEntry == null || selectedEntry.Signature == null)
+            {
+                MessageBox.Show("Подпись отсутствует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            BitmapImage signatureImage = ConvertByteArrayToBitmapImage(selectedEntry.Signature);
+            if (signatureImage != null)
+            {
+                SignatureImage.Source = signatureImage;
+                SignaturePopup.IsOpen = true;
+            }
+        }
+
+        private BitmapImage ConvertByteArrayToBitmapImage(byte[] byteArray)
+        {
+            if (byteArray == null || byteArray.Length == 0)
+            {
+                return null;
+            }
+
+            var bitmapImage = new BitmapImage();
+            using (var memoryStream = new System.IO.MemoryStream(byteArray))
+            {
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+            }
+
+            return bitmapImage;
+        }
+
+        private void Grid_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (SignaturePopup.IsOpen)
+            {
+                SignaturePopup.IsOpen = false;
+                e.Handled = true;
             }
         }
 
@@ -52,21 +100,7 @@ namespace DiplomVersion1.Pages
 
         private void ReturnKey_Click(object sender, RoutedEventArgs e)
         {
-            var selectedLogEntry = listJournal.SelectedItem as LogOfIssuingKey;
-
-            if (selectedLogEntry == null)
-            {
-                MessageBox.Show("Выберите запись для сдачи ключа.");
-                return;
-            }
-
-            if (selectedLogEntry.DateTimeOfDelivery.HasValue)
-            {
-                MessageBox.Show("Этот ключ уже сдан.");
-                return;
-            }
-
-            var returnWindow = new ReturnKeyWindow(selectedLogEntry);
+            var returnWindow = new ReturnKeyWindow();
             returnWindow.ShowDialog();
             LoadJournalData();
         }

@@ -13,6 +13,7 @@ public partial class Key
     public int? IdInstitute { get; set; }
 
     public virtual Institute? IdInstituteNavigation { get; set; }
+    public string? QrCodeBase64 { get; set; }
 
     public virtual ICollection<LogOfIssuingKey> LogOfIssuingKeys { get; set; } = new List<LogOfIssuingKey>();
 }

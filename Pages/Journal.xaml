@@ -8,7 +8,7 @@
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="Журнал о передвижении ключей">
 
-    <Grid Background="White">
+    <Grid Background="White" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown">
         <Rectangle Width="1920" Height="100" VerticalAlignment="Top" Fill="#D9D9D9"  />
         <TextBlock FontSize="48" TextAlignment="Center" Height="100" Margin="0,20,0,0"  VerticalAlignment="Top">ЖУРНАЛ УЧЕТА</TextBlock>
         <Button Background="#C5C5C5" Content="ВЫХОД" Width="205" Height="60" Click="Exit_OnClick" Style="{StaticResource ButtonTopMenu}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,100,0"/>
@@ -23,12 +23,12 @@
         </Menu>
 
         <ListView ItemsSource="{Binding}" Width="1920" Height="870" VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Center"
-          TextElement.Foreground="Black" Margin="0,210,0,0" Name="listJournal">
+          TextElement.Foreground="Black" Margin="0,210,0,0" Name="listJournal" MouseDoubleClick="ListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                             <GridViewColumn Header="Аудитория" DisplayMemberBinding="{Binding IdKeyNavigation.AudienceNumber}"/>
-                            <GridViewColumn Header="Выдан" DisplayMemberBinding="{Binding DateTimeOfIssue, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+                            <GridViewColumn Header="Выдан" DisplayMemberBinding="{Binding DateTimeOfIssue, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}"/>
                             <GridViewColumn Header="Сотрудник" DisplayMemberBinding="{Binding IdEmployeeNavigation.FullName}"/>
                             <GridViewColumn Header="Подразделение" DisplayMemberBinding="{Binding IdEmployeeNavigation.IdDepartmentNavigation.NameDep}" />
                             <GridViewColumn Header="Сдан" DisplayMemberBinding="{Binding DateTimeOfDelivery, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}"/>
@@ -37,5 +37,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Popup x:Name="SignaturePopup" Placement="Mouse" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade">
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Подпись сотрудника:" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Image x:Name="SignatureImage" Width="300" Height="150" Stretch="Uniform"/>
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </Page>

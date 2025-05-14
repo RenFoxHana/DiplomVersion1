@@ -4,37 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:DiplomVersion1.Windows"
         mc:Ignorable="d"
-        Title="ReturnKeyWindow" Height="300" Width="600">
+        Title="ReturnKeyWindow" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <Rectangle Width="Auto" Height="35" VerticalAlignment="Top" Fill="#D9D9D9" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
-        <TextBlock FontSize="18" TextAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0,5,0,0">СДАЧА КЛЮЧА</TextBlock>
+        <Image x:Name="cameraPreview" Grid.Row="0" Height="300" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <TextBlock Text="Дата:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
-        <xctk:DateTimePicker x:Name="dpReturnDate" Value="{Binding CurrentDateTime, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Height="40" Width="400" FontSize="25" IsEnabled="False"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button Content="СКАНИРОВАТЬ" Click="StartScanning_Click" Width="100" Margin="5" />
+            <Button Content="ОСТАНОВИТЬ" Click="StopScanning_Click" Width="100" Margin="5"/>
+        </StackPanel>
 
-        <TextBlock Text="Ключ:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
-        <TextBox x:Name="tbKey" Height="40" Width="400" Grid.Row="2" Grid.Column="1" FontSize="25" IsEnabled="False"/>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Сотрудник:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
-        <TextBox x:Name="tbEmployee" Height="40" Width="400" Grid.Row="3" Grid.Column="1" FontSize="25" IsEnabled="False"/>
-        
-        <Button Content="ВЫДАТЬ" Click="ReturnButton_Click" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,250,0"/>
-        <Button Content="ОТМЕНА" IsCancel="True" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" VerticalAlignment="Center" Margin="100,0,0,0"/>
+            <TextBlock Text="Дата:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
+            <xctk:DateTimePicker x:Name="dpReturnDate" Value="{Binding CurrentDateTime, Mode=OneWay}" IsEnabled="False" Grid.Row="0" Grid.Column="1" Height="40" Width="400" FontSize="25"/>
 
+            <TextBlock Text="Ключ:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
+            <ComboBox x:Name="cbKey" DisplayMemberPath="AudienceNumber" Height="40" Width="400" Grid.Row="1" Grid.Column="1" FontSize="25"
+                      IsEditable="True" IsTextSearchEnabled="True" TextSearch.TextPath="AudienceNumber" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+
+            <TextBlock Text="Сотрудник:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Right"/>
+            <TextBox x:Name="tbEmployee" Height="40" Width="400" Grid.Row="2" Grid.Column="1" FontSize="25" IsEnabled="False"/>
+
+            <Button Content="СДАТЬ" Click="ReturnButton_Click" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" 
+                    VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,250,0" Width="150"/>
+            <Button Content="ОТМЕНА" IsCancel="True" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource ButtonTopMenu}" 
+                    VerticalAlignment="Center" Margin="100,0,0,0" Width="150"/>
+
+        </Grid>
     </Grid>
 </Window>

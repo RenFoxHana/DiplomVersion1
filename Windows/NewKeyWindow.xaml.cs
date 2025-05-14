@@ -1,6 +1,11 @@
-﻿using DiplomVersion1.Model;
+﻿using DiplomVersion1.Helper;
+using DiplomVersion1.Model;
+using System.IO;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace DiplomVersion1.Windows
 {
@@ -31,6 +36,15 @@ namespace DiplomVersion1.Windows
             if (key.IdKey != 0)
             {
                 label.Content = "РЕДАКТИРОВАНИЕ КЛЮЧА";
+                if (!string.IsNullOrWhiteSpace(key.QrCodeBase64))
+                {
+                    var imageSource = BitmapToImageSource(Convert.FromBase64String(key.QrCodeBase64));
+                    qrCodeImage.Source = imageSource;
+                }
+            }
+            else
+            {
+                GenerateQrCodeForNewKey();
             }
 
             if (key.IdInstitute != null)
@@ -46,6 +60,114 @@ namespace DiplomVersion1.Windows
             }
         }
 
+        private void GenerateQrCodeForNewKey()
+        {
+            if (key.IdKey == 0)
+            {
+                using (var context = new BochagovaDiplomContext())
+                {
+                    int nextKeyId = context.Keys.Any() ? context.Keys.Max(k => k.IdKey) + 1 : 1;
+
+                    string qrCodeContent = nextKeyId.ToString();
+                    string qrCodeBase64 = QrCodeGenerator.GenerateQrCode(qrCodeContent);
+
+                    key.QrCodeBase64 = qrCodeBase64;
+
+                    //Отображение QR-кода
+                    if (qrCodeImage != null)
+                    {
+                        var imageSource = BitmapToImageSource(Convert.FromBase64String(qrCodeBase64));
+                        qrCodeImage.Source = imageSource;
+                    }
+                }
+            }
+            else
+            {
+                string qrCodeContent = key.IdKey.ToString();
+                string qrCodeBase64 = QrCodeGenerator.GenerateQrCode(qrCodeContent);
+
+                key.QrCodeBase64 = qrCodeBase64;
+
+                //Отображение QR-кода
+                if (qrCodeImage != null)
+                {
+                    var imageSource = BitmapToImageSource(Convert.FromBase64String(qrCodeBase64));
+                    qrCodeImage.Source = imageSource;
+                }
+            }
+        }
+
+        private void PrintQrCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(key.QrCodeBase64))
+            {
+                MessageBox.Show("QR-код не сгенерирован.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            string qrCodeContent;
+
+            if (key.IdKey == 0)
+            {
+                using (var context = new BochagovaDiplomContext())
+                {
+                    int nextKeyId = context.Keys.Any() ? context.Keys.Max(k => k.IdKey) + 1 : 1;
+                    qrCodeContent = nextKeyId.ToString();
+                }
+            }
+            else
+            {
+                qrCodeContent = key.IdKey.ToString();
+            }
+            var qrCodeBitmap = QrCodeGenerator.GenerateQrCodeBitmap(qrCodeContent, 236);
+
+            //Печать QR-кода
+            var printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                var visual = new DrawingVisual();
+                using (var context = visual.RenderOpen())
+                {
+
+                    var imageSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                        qrCodeBitmap.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+
+                    //Физический размер 1×1 см
+                    double dpi = 300;
+                    double widthInInches = 1 / 2.54;
+                    double heightInInches = 1 / 2.54;
+
+                    double widthInPixels = widthInInches * dpi;
+                    double heightInPixels = heightInInches * dpi;
+
+                    context.DrawImage(imageSource, new Rect(0, 0, widthInPixels, heightInPixels));
+                }
+
+                //Печать
+                printDialog.PrintVisual(visual, "QR Code");
+            }
+        }
+
+        private ImageSource BitmapToImageSource(byte[] imageData)
+        {
+            using var stream = new MemoryStream(imageData);
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = stream;
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            return bitmap;
+        }
+
+
+        private void RegenerateQrCode_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateQrCodeForNewKey();
+            MessageBox.Show("QR-код успешно создан.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
         private void LoadInstitutesDepartments()
         {
             using (var context = new BochagovaDiplomContext())
@@ -53,7 +175,7 @@ namespace DiplomVersion1.Windows
                 allInstitutes = context.Institutes.ToList();
                 allInstitutesCopy = allInstitutes.ToList();
                 cbInstitute.ItemsSource = allInstitutes;
-                
+
                 allDepartmentsWithoutInstitutes = context.Departments
                     .Where(d => d.IdInstitute == null)
                     .ToList();
@@ -137,9 +259,7 @@ namespace DiplomVersion1.Windows
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            string keyNumber = tbAudienceNumber.Text;
-
-            if (string.IsNullOrWhiteSpace(keyNumber))
+            if (string.IsNullOrWhiteSpace(tbAudienceNumber.Text))
             {
                 MessageBox.Show("Введите номер аудитории.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -151,7 +271,13 @@ namespace DiplomVersion1.Windows
                 return;
             }
 
-            key.AudienceNumber = keyNumber;
+            if (string.IsNullOrWhiteSpace(key.QrCodeBase64))
+            {
+                MessageBox.Show("QR-код не сгенерирован.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            key.AudienceNumber = tbAudienceNumber.Text;
             key.IdInstitute = SelectedInstituteId;
             key.IdDepartment = SelectedDepartmentId;
 
